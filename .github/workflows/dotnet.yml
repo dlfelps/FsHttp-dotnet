@@ -1,25 +1,28 @@
-name: Build + Tests
+name: Dotnet CI
 
 on:
   workflow_dispatch:
   push:
     branches: [ main ]
   
-jobs:
-     
+jobs:     
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout commit
+      uses: actions/checkout@v3
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
       with:
         dotnet-version: 6.x
+
     - name: Restore dependencies
       run: dotnet restore
+
     - name: Build
       run: dotnet build --no-restore
+
     - name: Test
       run: dotnet test --verbosity normal
